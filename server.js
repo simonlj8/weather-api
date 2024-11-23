@@ -1,7 +1,12 @@
 //import express from express;
 
+require('dotenv').config();
 const express = require('express');
 const app = express();
+
+const apiKey = process.env.API_KEY;
+const redisConnection = process.env.API_KEY;
+const PORT = process.env.PORT
 
 app.get("/", (req, res) => {
     res.send("Hej Hej Monica!!");
@@ -22,7 +27,7 @@ app.get('/api/weather', (req, res) => {
 
 });
 
-const PORT = 3000
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
