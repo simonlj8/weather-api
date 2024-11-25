@@ -1,6 +1,8 @@
 import express from "express"
 import 'dotenv/config';
 import axios from "axios";
+import {rateLimit} from "express-rate-limit";
+
 
 // require('dotenv').config();
 // const express = require('express');
@@ -10,6 +12,17 @@ const API_KEY = process.env.WEATHER_API_KEY;
 const BASE_URL = 'http://api.weatherapi.com/v1';
 const redisConnection = process.env.API_KEY;
 const PORT = process.env.PORT
+
+const limiter = rateLimit(
+    {
+        windowMs: 15 * 60 * 1000,
+        limit: 20,
+        standardHeaders: "draft-7",
+        legacyHeaders: false,
+    }
+)
+
+app.use(limiter)
 
 app.get("/", (req, res) => {
     res.send("Nothing to see here");
