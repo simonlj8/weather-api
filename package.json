@@ -11,6 +11,7 @@
   "author": "Simon Ljungström",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "weather-api": "file:"
