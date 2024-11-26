@@ -19,6 +19,9 @@ const limiter = rateLimit(
         limit: 20,
         standardHeaders: "draft-7",
         legacyHeaders: false,
+        message: {
+        error: 'To many request, try again later.',
+    },
     }
 )
 
