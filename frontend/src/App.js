@@ -14,7 +14,9 @@ function App() {
       .catch((error) => console.error("Error fetching data", error));
   };
   useEffect(() => {
+    if (location.length >= 3) {
     fetchWeather();
+  }
   }, [location]);
 
   const getWeatherIcon = (condition) => {
@@ -26,9 +28,10 @@ function App() {
       'Mist': '🌫️',
       'Patchy rain possible': '🌦️',
       'Rain': '🌧️',
+      "light Rain": '🌦️',
       'Snow': '❄️'
     };
-    return icons[condition] || '🌈';
+    return icons[condition] || '⛅';
   };
 
   const getBackgroundClass = (condition) => {
