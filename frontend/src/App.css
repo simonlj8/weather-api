@@ -1,38 +1,139 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  /* Färgpalett */
+  --primary-background: #f4f4f4;
+  --card-background: white;
+  --text-color: #333;
+  --input-border: #e0e0e0;
+  --button-color: #4a90e2;
+  --button-hover: #357abd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--primary-background);
+  transition: background-color 0.5s ease;
+  padding: 20px;
+}
+
+.weather-card {
+  background-color: var(--card-background);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.search-container {
+  display: flex;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.location-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid var(--input-border);
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.search-button {
+  padding: 10px 20px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: var(--button-hover);
+}
+
+.weather-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.location-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.temperature {
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--button-color);
+}
+
+.weather-condition {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.weather-stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.stat-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.stat-value {
+  font-weight: 600;
+}
+
+.loading-spinner {
+  font-size: 18px;
+  color: #666;
+}
+
+.error-message {
+  color: #d9534f;
+  font-size: 16px;
+}
+
+/* Bakgrundsklasser för olika väderförhållanden */
+.weather-sunny {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+}
+
+.weather-cloudy {
+  background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+}
+
+.weather-rainy {
+  background: linear-gradient(135deg, #83a4d4, #b6fbff);
+}
+
+.weather-snowy {
+  background: linear-gradient(135deg, #e6e9f0, #eef1f5);
+}
+
+.weather-default {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
 }

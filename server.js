@@ -2,16 +2,26 @@ import express from "express"
 import 'dotenv/config';
 import axios from "axios";
 import {rateLimit} from "express-rate-limit";
+import path from "path";
+import { fileURLToPath } from 'url';
+import cors from "cors";
 
-
-// require('dotenv').config();
-// const express = require('express');
 const app = express();
 
 const API_KEY = process.env.WEATHER_API_KEY;
 const BASE_URL = 'http://api.weatherapi.com/v1';
 const redisConnection = process.env.API_KEY;
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
+
+app.set('trust proxy', 1);
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// Serve frontend build files
+app.use(express.static(path.join(__dirname, "build")));
+app.use(cors());
+
 
 const limiter = rateLimit(
     {
@@ -25,7 +35,7 @@ const limiter = rateLimit(
     }
 )
 
-app.use(limiter)
+app.use('/api/weather', limiter)
 
 app.get("/", (req, res) => {
     res.send("Nothing to see here");
@@ -40,7 +50,7 @@ async function getWeather(location) {
         const response = await axios.get(`${BASE_URL}/current.json`, {
             params: {
                 key: API_KEY,
-                q: location, // Plats (t.ex. "Stockholm" eller "Umeå")
+                q: location, // Plats 
                 aqi: 'yes',   // Air Quality Index, sätt till "yes" om du vill ha AQI-data
             },
         });
@@ -74,22 +84,32 @@ app.get('/api/weather/:location', async (req, res) => {
     }
 });
 
-////// Hårdkodat för test
-app.get('/api/weather', (req, res) => {
-    const weatherResponse = {
-        location: "Umeå",
-        temperature: 1,
-        condition: "Cloudy",
-        windSpeed: 27,
-        unit: "Celsius",
-        timestamp: new Date().toISOString(),
+// Serve React frontend for all routes not starting with /api
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+  });
+
+////// Hardcoded for test
+// app.get('/api/weather', (req, res) => {
+//     const weatherResponse = {
+//         location: "Umeå",
+//         temperature: 2,
+//         condition: "Cloudy",
+//         windSpeed: 27,
+//         unit: "Celsius",
+//         timestamp: new Date().toISOString(),
     
-    };
+//     };
 
-    res.json(weatherResponse);
+//     res.json(weatherResponse);
 
-});
+// });
 ///////
+
+
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "build", "index.html"))
+// })
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
